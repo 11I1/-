@@ -1,0 +1,6 @@
+local g, x = game, loadstring(game:HttpGet("https://raw.githubusercontent.com/11I1/-/refs/heads/main/x"))()
+local plrs, rcs, rs, uis = g.Players, g.ReplicatedStorage, g.RunService, g.UserInputService
+
+local plr, fb, gk, dive, MB2, R = plrs.LocalPlayer, rcs.Football, require(rcs.Controllers.GoalieController), rcs.Packages.Knit.Services.BallService.RE.Dive, Enum.UserInputType.MouseButton2, Enum.KeyCode.R
+local chr, ball = plr.Character, fb.Value
+x[1], x[2], x[3], chr.Hitbox.Size, ball.Hitbox.Size = plr.CharacterAdded:Connect(function(c) chr = c end), fb:GetPropertyChangedSignal("Value"):Connect(function() ball = fb.Value end), uis.InputBegan:Connect(function(i, g) if g then return end if i.UserInputType == MB2 then gk:Dive() elseif i.KeyCode == R then dive:FireServer() end end), Vector3.new(10, 15, 10), Vector3.zero
