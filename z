@@ -1,6 +1,35 @@
 local g, x = game, loadstring(game:HttpGet("https://raw.githubusercontent.com/11I1/-/refs/heads/main/x"))()
-local plrs, rcs, rs, uis = g.Players, g.ReplicatedStorage, g.RunService, g.UserInputService
+local plrs, rcs, rs, vim, uis = g.Players, g.ReplicatedStorage, g.RunService, g.VirtualInputManager, g.UserInputService
 
-local plr, fb, gk, dive, MB2, R = plrs.LocalPlayer, rcs.Football, require(rcs.Controllers.GoalieController), rcs.Packages.Knit.Services.BallService.RE.Dive, Enum.UserInputType.MouseButton2, Enum.KeyCode.R
+local plr, fb, gk, dive, mb2, r, q = plrs.LocalPlayer, rcs.Football, require(rcs.Controllers.GoalieController), rcs.Packages.Knit.Services.BallService.RE.Dive, Enum.UserInputType.MouseButton2, Enum.KeyCode.R, Enum.KeyCode.Q
 local chr, ball = plr.Character, fb.Value
-x[1], x[2], x[3], chr.Hitbox.Size, ball.Hitbox.Size = plr.CharacterAdded:Connect(function(c) chr = c end), fb:GetPropertyChangedSignal("Value"):Connect(function() ball = fb.Value end), uis.InputBegan:Connect(function(i, g) if g then return end if i.UserInputType == MB2 then gk:Dive() elseif i.KeyCode == R then dive:FireServer() end end), Vector3.new(10, 15, 10), Vector3.zero
+local hum, chb, bhb, op = chr.Humanoid, chr.Hitbox, ball.Hitbox, ball.OnPlayer
+chb.Size, bhb.Size = Vector3.new(10, 15, 10), Vector3.zero
+
+local function press(k)
+    vim:SendKeyEvent(true, k, false, game)
+    task.wait(.02)
+    vim:SendKeyEvent(false, k, false, game)
+end
+
+local dr, dl = function() press"A" gk:Dive() end, function() press"D" gk:Dive() end
+
+x[1], x[2], x[3], x[4] = plr.CharacterAdded:Connect(function(c)
+    chr = c
+    chb = chr.Hitbox
+    chb.Size = Vector3.new(10, 15, 10)
+end), fb:GetPropertyChangedSignal"Value":Connect(function()
+    ball = fb.Value
+    bhb, op = ball.Hitbox, ball.OnPlayer
+    bhb.Size = Vector3.zero
+end), uis.InputBegan:Connect(function(i, g)
+    if g then return end
+    if i.UserInputType == mb2 then
+        gk:Dive()
+    elseif i.KeyCode == r then
+        dive:FireServer()
+    elseif i.KeyCode == q and not op.Value then
+        hum:ChangeState(3)
+        if chb.CFrame.LookVector:Cross(((ball.Position + (ball.AssemblyLinearVelocity * 3)) - chb.Position).Unit).Y > 0 then dr() else dl() end
+    end
+end), rs.PreRender:Connect(function() firetouchinterest(chb, bhb, 0) end)
