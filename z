@@ -30,6 +30,7 @@ end), uis.InputBegan:Connect(function(i, g)
         dive:FireServer()
     elseif i.KeyCode == q and not op.Value then
         hum:ChangeState(3)
+        task.wait(.04)
         if chb.CFrame.LookVector:Cross(((ball.Position + (ball.AssemblyLinearVelocity * 3)) - chb.Position).Unit).Y > 0 then dr() else dl() end
     end
 end), rs.PreRender:Connect(function() firetouchinterest(chb, bhb, 0) end)
