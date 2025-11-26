@@ -111,7 +111,7 @@ local b = {
 
 for _, v in r.Assets:GetChildren() do
     if table.find(b, v.Name) then v:Destroy() end
-end
+end; r = nil
 
 table.clear(b); b = nil
 
