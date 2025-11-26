@@ -1,0 +1,118 @@
+for _, v in workspace.Terrain:GetChildren() do
+    if v.Name == "DO_NOT_REMOVE_ForgeSharedPartCache" or v.Name == "DO_NOT_REMOVE_ForgeTextureCache" then
+        v:ClearAllChildren()
+        continue
+    end; v:Destroy()
+end
+
+local x = {
+    "Cards",
+    "Catalog Import Tool",
+    "FlowJunk",
+    "GameObjects",
+    "Leaderboards",
+    "LobbyVFX",
+    "McNagiEmotes",
+    "Mythics",
+    "Skulls",
+    "Spin",
+    "Stocks",
+    "VFXPreload",
+    "AfkWorldNpc",
+    "Ball",
+    "EventSignUp",
+    "Lobby stuff",
+    "MythicEmote",
+    "PreloadDummy",
+    "Quests",
+    "Quests3",
+    "Rig",
+    "ShopRig",
+    "Showroom",
+    "Texts",
+    "VIP",
+    "AnimeProx",
+    "BG",
+    "Billboard",
+    "Christmas",
+    "EventSpinPrompt",
+    "Part",
+    "Shop",
+    "ToxicProx",
+    "UpdateTimer"
+}
+
+for _, v in workspace:GetChildren() do
+    if table.find(x, v.Name) then v:Destroy() end
+end
+
+table.clear(x); x = nil
+
+local y = {
+    "Beam",
+    "Highlight",
+    "ParticleEmitter",
+    "Trail",
+    "Sound"
+}
+
+local c = workspace.Camera
+for _, v in workspace:GetDescendants() do
+    if not table.find(y, v.ClassName) or v:IsDescendantOf(c) then continue end
+    v:Destroy()
+end; c = nil
+
+local z = loadstring(game:HttpGet("https://raw.githubusercontent.com/11I1/-/refs/heads/main/x"))()
+
+z[1] = workspace.DescendantAdded:Connect(function(o)
+    if table.find(y, o.ClassName) then o:Destroy() end
+end)
+
+local a = {
+    "PlrRig",
+    "StarterGuiContainer",
+    "ShowroomTemplates",
+    "OldLighting",
+    "Maps",
+    "LoadingCutscene",
+    "LimitedsHolder",
+    "EgoEvent"
+}
+
+local r = game.ReplicatedStorage
+for _, v in r:GetChildren() do
+    if table.find(a, v.Name) then v:Destroy() end
+end
+
+table.clear(a); a = nil
+
+local b = {
+    "Anime",
+    "Auras",
+    "Awakenings",
+    "CharacterParticleRigs",
+    "Cosmetics",
+    "Customization",
+    "DoorsHolder",
+    "GoalEffects",
+    "LimitedTemplates",
+    "Misc",
+    "MoonCutsceneFiles",
+    "MythicTemplates",
+    "NormalLighting",
+    "NpcRotations",
+    "OST",
+    "PlayerDescriptions",
+    "Podium",
+    "StartingCutscene",
+    "Toxic",
+    "AstaBox"
+}
+
+for _, v in r.Assets:GetChildren() do
+    if table.find(b, v.Name) then v:Destroy() end
+end
+
+table.clear(b); b = nil
+
+return z
