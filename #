@@ -97,7 +97,6 @@ local b = {
     "GoalEffects",
     "LimitedTemplates",
     "Misc",
-    "MoonCutsceneFiles",
     "MythicTemplates",
     "NormalLighting",
     "NpcRotations",
